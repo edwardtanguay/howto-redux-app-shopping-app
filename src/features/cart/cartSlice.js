@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 	items: [],
 	customerName: '',
+	coupon: false
 };
 
 export const cartSlice = createSlice({
@@ -10,6 +11,7 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addItem: (state, action) => {
+			action.payload.discountedPrice = action.payload.price * (state.coupon ? .9 : 1);
 			state.items.push(action.payload);
 		},
 		removeItem: (state) => {
@@ -17,9 +19,13 @@ export const cartSlice = createSlice({
 		},
 		changeCustomerName: (state, action) => {
 			state.customerName = action.payload;
+		},
+		addCoupon: (state) => {
+			state.coupon = true;
+			state.items.forEach(m=>m.discountedPrice = m.price * .9)
 		}
 	},
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, addCoupon } = cartSlice.actions;
 export default cartSlice.reducer;
