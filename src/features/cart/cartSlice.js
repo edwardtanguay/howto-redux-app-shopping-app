@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	counter: 0
+	items: [],
 };
 
 export const cartSlice = createSlice({
@@ -9,12 +9,12 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		add: (state) => {
-			state.counter += 1;
+			state.items.push('book');
 		},
 		subtract: (state) => {
-			state.counter -= 1;
-		}
-	}
+			state.items.pop();
+		},
+	},
 });
 
 export const { add, subtract } = cartSlice.actions;
